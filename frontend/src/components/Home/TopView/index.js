@@ -18,49 +18,11 @@ const TopView = () => {
     // Add more styling as needed
     width: "100%",
   };
-  const state = useContext(HomeContext);
-  console.log("sttate=>", state);
 
-  function reducer(state, action) {
-    switch (action) {
-      case "inc":
-        return { count: state.count + 1 };
-      case "dec":
-        return { count: state.count - 1 };
-      default:
-        return state;
-    }
-  }
-
-  const [form, dispatch] = useReducer(reducer, { count: 0 });
-  console.log("form", form);
-
-  const btnRef = useRef();
-  console.log("btnRef ouside=>", btnRef.current);
-  const submit = () => {
-    console.log("btn =>", btnRef.current.value);
-  };
-  useEffect(() => {
-    console.log("use=effect");
-  }, []);
-  let value = useMemo(() => {
-    console.log("usememo");
-    return 100;
-  }, []);
-  let fun = useCallback((val) => {
-    console.log("usecallback=>", val);
-  }, []);
-  console.log("value=>", value);
-  fun();
   return (
     <div style={styles}>
-      {/* <img src={backgroundImageUrl} /> */}
+      <img src={backgroundImageUrl} />
 
-      <div style={{ color: "white" }}>{form.count}</div>
-      <input ref={btnRef} name="id" type="text" />
-      <button onClick={submit}>submit</button>
-      <button onClick={() => dispatch("inc")}>INCREMENT</button>
-      <button onClick={() => dispatch("dec")}>DECREMENT</button>
     </div>
   );
 };
