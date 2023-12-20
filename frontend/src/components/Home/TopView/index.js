@@ -14,15 +14,14 @@ const TopView = () => {
   const styles = {
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "700px", // Set the desired height
+    minHeight: "700px", // Set the desired height
     // Add more styling as needed
     width: "100%",
   };
 
   return (
     <div style={styles}>
-      <img src={backgroundImageUrl} />
-
+      <img width="100%" src={backgroundImageUrl} />
     </div>
   );
 };
