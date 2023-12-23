@@ -1,0 +1,12 @@
+.text-red {
+  color: red;
+}
+
+.text-green {
+  color: green;
+}
+
+.border-green {
+  border-color: green;
+  background-color: aliceblue;
+}

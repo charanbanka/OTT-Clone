@@ -31,4 +31,20 @@ const getImageService = async (req, res) => {
   }
 };
 
-module.exports = { getImageService };
+const getAllImagesService = async (req, res) => {
+  try {
+    let data = await ImageModel.findAll();
+    return {
+      status: constants.SERVICE_SUCCESS,
+      data,
+    };
+  } catch (error) {
+    console.log("getAllImagesService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+module.exports = { getImageService, getAllImagesService };

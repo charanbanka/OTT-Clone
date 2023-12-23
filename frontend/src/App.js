@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Movies from "./components/Movies";
 import TVShows from "./components/TVShows";
 import "./App.css";
+import Admin from "./components/Admin";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <Route path="/" exact element={<Home />} />
               <Route path="/movies" element={<Movies />} />
               <Route path="/tv-shows" element={<TVShows />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </div>
         </div>

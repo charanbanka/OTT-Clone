@@ -56,4 +56,20 @@ const getVideoService = async (req, res) => {
   }
 };
 
-module.exports = { getVideoService };
+const getAllVideosService = async () => {
+  try {
+    let data = await VideoModel.findAll();
+    return {
+      status: constants.SERVICE_SUCCESS,
+      data,
+    };
+  } catch (error) {
+    console.log("getAllVideosService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+module.exports = { getVideoService, getAllVideosService };
