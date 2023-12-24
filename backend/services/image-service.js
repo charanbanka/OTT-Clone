@@ -19,7 +19,7 @@ const getImageService = async (req, res) => {
       "Content-Type": "image/jpeg",
       "Content-Length": imageSize,
     };
-    console.log("inside*****************************",imagePath)
+    console.log("inside*****************************", imagePath);
     const file = fs.createReadStream(imagePath);
     res.writeHead(200, headers);
     file.pipe(res);
@@ -48,4 +48,66 @@ const getAllImagesService = async (req, res) => {
   }
 };
 
-module.exports = { getImageService, getAllImagesService };
+const createImageService = async (reqInfo) => {
+  try {
+    const data = await ImageModel.create(reqInfo);
+
+    return {
+      status: constants.SERVICE_SUCCESS,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log("createImageService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+const updateImageService = async (reqInfo) => {
+  try {
+    const id = reqInfo?.id;
+    if (!id) throw new Error("Id not found");
+    const data = await ImageModel.update(reqInfo, { where: { id } });
+
+    return {
+      status: constants.SERVICE_SUCCESS,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log("updateImageService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+const deleteImageByIdService = async (reqInfo) => {
+  try {
+    const id = reqInfo?.id;
+    if (!id) throw new Error("Id not found");
+
+    const data = await ImageModel.delete({ where: { id } });
+
+    return {
+      status: constants.SERVICE_SUCCESS,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log("deleteImageByIdService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+module.exports = {
+  getImageService,
+  getAllImagesService,
+  createImageService,
+  updateImageService,
+  deleteImageByIdService,
+};

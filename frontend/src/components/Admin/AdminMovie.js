@@ -59,6 +59,7 @@ const AdminMovie = () => {
     console.log("resp");
     if (resp.status == constants.SERVICE_FAILURE) return;
     onClear();
+    getMoviesApi();
   };
 
   useEffect(() => {

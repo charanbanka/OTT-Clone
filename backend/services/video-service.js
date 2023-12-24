@@ -72,4 +72,66 @@ const getAllVideosService = async () => {
   }
 };
 
-module.exports = { getVideoService, getAllVideosService };
+const createVideoService = async (reqInfo) => {
+  try {
+    const data = await VideoModel.create(reqInfo);
+
+    return {
+      status: constants.SERVICE_SUCCESS,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log("createVideoService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+const updateVideoService = async (reqInfo) => {
+  try {
+    const id = reqInfo?.id;
+    if (!id) throw new Error("Id not found");
+    const data = await VideoModel.update(reqInfo, { where: { id } });
+
+    return {
+      status: constants.SERVICE_SUCCESS,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log("updateVideoService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+const deleteVideoByIdService = async (reqInfo) => {
+  try {
+    const id = reqInfo?.id;
+    if (!id) throw new Error("Id not found");
+
+    const data = await VideoModel.delete({ where: { id } });
+
+    return {
+      status: constants.SERVICE_SUCCESS,
+      message: "Success",
+    };
+  } catch (error) {
+    console.log("deleteVideoByIdService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
+module.exports = {
+  getVideoService,
+  getAllVideosService,
+  createVideoService,
+  updateVideoService,
+  deleteVideoByIdService,
+};
