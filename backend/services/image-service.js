@@ -19,6 +19,7 @@ const getImageService = async (req, res) => {
       "Content-Type": "image/jpeg",
       "Content-Length": imageSize,
     };
+    console.log("inside*****************************",imagePath)
     const file = fs.createReadStream(imagePath);
     res.writeHead(200, headers);
     file.pipe(res);

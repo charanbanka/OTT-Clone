@@ -1,8 +1,7 @@
 const videoService = require("../services/video-service");
 
 const getVideo = async (req, res) => {
-  let resp = await videoService.getVideoService(req, res);
-  res.send(resp);
+  await videoService.getVideoService(req, res);
 };
 
 const getAllVideos = async (req, res) => {

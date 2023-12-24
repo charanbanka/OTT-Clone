@@ -1,8 +1,8 @@
 const imageService = require("../services/image-service");
 
 const getImage = async (req, res) => {
-  let resp = await imageService.getImageService(req, res);
-  res.send(resp);
+  await imageService.getImageService(req, res);
+
 };
 
 const getAllImages = async (req, res) => {

@@ -1,0 +1,15 @@
+.btn {
+}
+.btn-primary {
+  background-color: blue;
+}
+.btn-secondary {
+  background-color: gray;
+}
+
+.btn-warning {
+  background-color: orange
+}
+.btn-gray {
+  background-color: gray;
+}

@@ -24,7 +24,7 @@ const Admin = () => {
                 onClick={() => setTab(item.key)}
                 // className="tab-label text-green"
                 className={`tab-label ${
-                  item.key == tab && "text-green border-green"
+                  item.key == tab && "background-gray text-white"
                 }`}
               >
                 {" "}
