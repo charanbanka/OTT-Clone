@@ -78,7 +78,7 @@ const deleteMovieByIdService = async (reqInfo) => {
     const id = reqInfo?.id;
     if (!id) throw new Error("Id not found");
 
-    const data = await movieModel.delete({ where: { id } });
+    const data = await movieModel.destroy({ where: { id } });
 
     return {
       status: constants.SERVICE_SUCCESS,

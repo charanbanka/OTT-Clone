@@ -7,21 +7,21 @@ import React, {
   useRef,
 } from "react";
 import HomeContext from "../HomeContext";
+import config from "../../../config";
 
-const TopView = () => {
-  const backgroundImageUrl =
-    "http://localhost:8000/images/image/44dfb8a6-344d-4ef6-8ca7-0bf8620ba5c1";
+const TopView = ({ image_id }) => {
+  const backgroundImageUrl = `${config.baseUrl}/images/image/${image_id}`;
   const styles = {
     backgroundSize: "cover",
     backgroundPosition: "center",
-    minHeight: "700px", // Set the desired height
+    height: "100%", // Set the desired height
     // Add more styling as needed
     width: "100%",
   };
 
   return (
     <div style={styles}>
-      <img width="100%" src={backgroundImageUrl} />
+      <img width="100%" src={backgroundImageUrl} height="100" />
     </div>
   );
 };

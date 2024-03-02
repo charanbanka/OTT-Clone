@@ -18,7 +18,7 @@ const Movie = ({ movie }) => {
     <div className="movie-container">
       <img
         width="100%"
-        height="100%"
+        height="122px"
         src={getImageUrl(movie.image_id)}
         className="movie-container-image"
       />

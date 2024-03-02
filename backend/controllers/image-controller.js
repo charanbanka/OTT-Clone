@@ -25,4 +25,9 @@ const deleteImageById = async (req, res) => {
   res.send(resp);
 };
 
-module.exports = { getImage, getAllImages, createImage, updateImage,deleteImageById };
+const getAllImagesByType = async (req, res) => {
+  const resp = await imageService.getAllImagesByTypeService(req.body);
+  res.send(resp);
+};
+
+module.exports = { getImage, getAllImages, createImage, updateImage,deleteImageById, getAllImagesByType };

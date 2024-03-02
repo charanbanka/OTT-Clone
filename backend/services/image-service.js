@@ -89,7 +89,7 @@ const deleteImageByIdService = async (reqInfo) => {
     const id = reqInfo?.id;
     if (!id) throw new Error("Id not found");
 
-    const data = await ImageModel.delete({ where: { id } });
+    const data = await ImageModel.destroy({ where: { id } });
 
     return {
       status: constants.SERVICE_SUCCESS,
@@ -104,10 +104,29 @@ const deleteImageByIdService = async (reqInfo) => {
   }
 };
 
+const getAllImagesByTypeService = async (reqInfo) => {
+  try {
+    const type = reqInfo?.type;
+    if (!type) throw new Error("Type not found");
+    let data = await ImageModel.findAll({ where: { type } });
+    return {
+      status: constants.SERVICE_SUCCESS,
+      data,
+    };
+  } catch (error) {
+    console.log("getAllImagesByTypeService=>", error);
+    return {
+      status: constants.SERVICE_FAILURE,
+      message: error?.message,
+    };
+  }
+};
+
 module.exports = {
   getImageService,
   getAllImagesService,
   createImageService,
   updateImageService,
   deleteImageByIdService,
+  getAllImagesByTypeService
 };

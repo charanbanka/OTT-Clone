@@ -1,10 +1,10 @@
 .app {
   margin: 0;
   top: 0;
-  color: white;
+  /* color: white; */
 }
 
 .main-container {
-    background: #141414;
+    /* background: #504f4f; */
     height: auto;
 }

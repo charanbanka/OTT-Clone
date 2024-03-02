@@ -7,5 +7,6 @@ imageRouter.get("/getAll", imageController.getAllImages);
 imageRouter.post("/image/create", imageController.createImage);
 imageRouter.put("/image/update", imageController.updateImage);
 imageRouter.delete("/image/delete/:id", imageController.deleteImageById);
+imageRouter.post("/getbytype", imageController.getAllImagesByType);
 
 module.exports = imageRouter;

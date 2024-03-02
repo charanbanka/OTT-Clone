@@ -3,11 +3,14 @@ import config from "../../config";
 import { serviceRequest } from "../../serviceRequest";
 import "./admin.css";
 import constants from "../../constants";
+import { getImageUrl } from "../services/image-services";
 
 const GET_VIDEOS_LIST_URL = `${config.baseUrl}/videos/getAll`;
 const GET_IMAGES_LIST_URL = `${config.baseUrl}/images/getAll`;
 const GET_MOVIES_LIST_URL = `${config.baseUrl}/movies/getAll`;
 const CREATE_MOVIE_URL = `${config.baseUrl}/movies/movie/create`;
+const UPDATE_MOVIE_URL = `${config.baseUrl}/movies/movie/update`;
+const DELETE_MOVIE_URL = `${config.baseUrl}/movies/movie/delete`;
 
 const INITIAL_FORM_VALUES = {
   name: "",
@@ -73,9 +76,31 @@ const AdminMovie = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const updateMovieApi = async () => {
+    let resp = await serviceRequest({
+      url: UPDATE_MOVIE_URL,
+      method: "put",
+      data: form,
+    });
+    console.log("resp");
+    if (resp.status == constants.SERVICE_FAILURE) return;
+    onClear();
+    getMoviesApi();
+  };
+
+  const deleteMovieApi = async (id) => {
+    let resp = await serviceRequest({
+      url: `${DELETE_MOVIE_URL}/${id}`,
+      method: "delete",
+    });
+
+    getMoviesApi();
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    createMovieApi();
+    if (form?.id) updateMovieApi();
+    else createMovieApi();
   };
 
   const onClear = () => {
@@ -87,12 +112,24 @@ const AdminMovie = () => {
     setIsForm(!isForm);
   };
 
+  const onClickEdit = (movie) => {
+    setForm(movie);
+    setIsForm(true);
+  };
+
+  const onClickDelete = (movie) => {
+    alert("Are you sure you want to proceed?");
+
+    deleteMovieApi(movie.id);
+  };
+
   const movieForm = (
     <form className="movie-form" onSubmit={onSubmit}>
-      <div>New Movie</div>
-      <div className="form-container">
+      <div className="text-lg font-bold mb-4">New Movie</div>
+
+      <div className="form-container mb-4">
         <div>
-          <label for="name">
+          <label htmlFor="name" className="block">
             Name<span className="text-red">*</span>:
           </label>
           <input
@@ -103,80 +140,78 @@ const AdminMovie = () => {
             value={form.name}
             onChange={onChange}
             required
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
         <div>
-          <label for="Content">
+          <label htmlFor="content" className="block">
             Content<span className="text-red">*</span>:
           </label>
           <input
             type="text"
-            id="Content"
+            id="content"
             name="content"
             placeholder="Enter Movie Content"
             value={form.content}
             onChange={onChange}
             required
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
           />
         </div>
       </div>
-      <div className="form-container">
+
+      <div className="form-container mb-4">
         <div>
-          <label for="image_id">
+          <label htmlFor="image_id" className="block">
             Select Image<span className="text-red">*</span>:
           </label>
-
           <select
             name="image_id"
             id="image_id"
-            placeholder="Select Image..."
             value={form.image_id}
             onChange={onChange}
             required
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
           >
-            <option value="" className="text-gray cursor-pointer">
+            <option value="" disabled>
               Select Image...
             </option>
-            {images?.map((image) => {
-              return (
-                <option value={image.id} className="cursor-pointer">
-                  {" "}
-                  {image.name}{" "}
-                </option>
-              );
-            })}
+            {images?.map((image) => (
+              <option key={image.id} value={image.id}>
+                {image.name}
+              </option>
+            ))}
           </select>
         </div>
         <div>
-          <label for="video_id">
+          <label htmlFor="video_id" className="block">
             Select Video<span className="text-red">*</span>:
           </label>
-
           <select
             name="video_id"
             id="video_id"
-            placeholder="Select Video..."
             value={form.video_id}
             onChange={onChange}
             required
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
           >
-            <option value="" className="text-gray cursor-pointer">
+            <option value="" disabled>
               Select Video...
             </option>
-            {videos?.map((video) => {
-              return (
-                <option value={video.id} className="cursor-pointer">
-                  {" "}
-                  {video.name}{" "}
-                </option>
-              );
-            })}
+            {videos?.map((video) => (
+              <option key={video.id} value={video.id}>
+                {video.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>
-      <div className="form-container">
+
+      <div className="form-container mb-4">
         <div>
-          <label for="languages">Languages:</label>
+          <label htmlFor="languages" className="block">
+            Languages:
+          </label>
           <input
             type="text"
             id="languages"
@@ -185,68 +220,137 @@ const AdminMovie = () => {
             value={form.languages}
             onChange={onChange}
             required
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
           />
-          <span style={{ padding: 0, margin: 0 }} className="text-gray">
-            movie1,movie2,..
+          <span className="text-sm text-gray-500">
+            Separate languages with commas (e.g., English, Spanish)
           </span>
         </div>
       </div>
+
       <div className="form-container">
-        <button type="button" className="btn-warning" onClick={onClear}>
+        <button
+          type="button"
+          className="btn-warning mr-4 py-2 px-4"
+          onClick={onClear}
+        >
           Clear
         </button>
-        <button type="submit">Submit</button>
+        <button type="submit" className="py-2 px-4 bg-blue-500 text-white">
+          Submit
+        </button>
       </div>
     </form>
   );
 
   const movietable = (
-    <div>
-      <table>
+    <div className="overflow-x-auto">
+      <table className="min-w-full">
         <thead>
           <tr>
-            <th>Sr.No</th>
-            <th>Name</th>
-            <th>Content</th>
-            <th>Languages</th>
-            <th>Image</th>
-            <th>Video</th>
-            <th>Action</th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Sr.No
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Name
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Content
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Languages
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Image
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Video
+            </th>
+            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Action
+            </th>
           </tr>
         </thead>
-        <tbody>
-          {movies.map((movie, idx) => {
-            return (
+        <tbody className="bg-white divide-y divide-gray-200">
+          {movies?.length ? (
+            movies?.map((movie, idx) => (
               <tr key={movie.id}>
-                <td>{idx + 1}</td>
-                <td>{movie.name || "-"}</td>
-                <td>{movie.content || "-"}</td>
-                <td>{movie.languages || "-"}</td>
-                <td>{movie.image_id || "-"}</td>
-                <td>{movie.video_id || "-"}</td>
-                <td>
-                  <span className="edit">Edit</span>
-                  <span className="delete">Delete</span>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {idx + 1}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {movie.name || "-"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {movie.content || "-"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {movie.languages || "-"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {/* {movie.image_id || "-"} */}
+                  <img
+                    src={getImageUrl(movie.image_id)}
+                    alt=""
+                    className="h-30 w-40"
+                  />
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {movie.video_id || "-"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <span
+                    className="text-indigo-600 hover:text-indigo-900 cursor-pointer mr-2"
+                    onClick={() => onClickEdit(movie)}
+                  >
+                    Edit
+                  </span>
+                  <span
+                    className="text-red-600 hover:text-red-900 cursor-pointer"
+                    onClick={() => onClickDelete(movie)}
+                  >
+                    Delete
+                  </span>
                 </td>
               </tr>
-            );
-          })}
+            ))
+          ) : (
+            <tr>
+              <td
+                colSpan="7"
+                className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center"
+              >
+                No movies available
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
   );
 
   return (
-    <div className="admin-movie">
-      <div className="admin-movie-header">
-        <div>AdminMovie</div>
+    <div className="admin-movie bg-white shadow-md rounded-md p-4">
+      {/* AdminImage header section */}
+      <div className="admin-movie-header flex justify-between items-center mb-4">
+        <div className="text-lg font-bold">Admin Movie</div> {/* Title */}
         <div>
-          <button onClick={onCancel}>
-            {isForm ? "Cancel" : "Create"} Movie
+          <button
+            onClick={onCancel}
+            className={`bg-${
+              isForm ? "red" : "blue"
+            }-500 text-white py-2 px-4 rounded`}
+          >
+            {isForm ? "Cancel" : "Create"} Movie{" "}
+            {/* Button to toggle form visibility */}
           </button>
         </div>
       </div>
-      {isForm && <div>{movieForm} </div>}
+
+      {/* Conditional rendering of imageForm */}
+      {isForm && <div>{movieForm}</div>}
+
+      {/* Display images table */}
       <div className="movies-table">{movietable}</div>
     </div>
   );

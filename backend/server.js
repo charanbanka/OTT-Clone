@@ -1,4 +1,5 @@
 require("dotenv").config();
+const config = require("./config");
 
 try {
   const app = require("./app");
@@ -9,7 +10,7 @@ try {
       console.log("DB connection established successfully.");
       db.sync();
       // import all models
-      
+
       const users = require("./models/user");
       const movies = require("./models/movies");
       const images = require("./models/movies");
@@ -18,8 +19,8 @@ try {
     .catch((error) => {
       console.log("Unable to connect to the database", error);
     });
-
-  app.listen(8000, () => {
+    
+  app.listen(config.server_port, () => {
     console.log("Serverv running at port 8000");
   });
 } catch (error) {

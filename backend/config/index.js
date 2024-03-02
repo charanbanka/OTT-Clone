@@ -1,5 +1,5 @@
 module.exports = {
-  port: process.env.DB_PORT,
+  server_port: process.env.SERVER_PORT,
   allowhosts: process.env.ALLOW_HOST,
   allowOrigin: process.env.ALLOW_ORIGIN,
   dbconfig: {
