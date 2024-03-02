@@ -32,7 +32,7 @@ const Home = () => {
           <h4 className="text-blue-500 cursor-pointer">See All</h4>
         </div>
 
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-3">
           {movies.map((movie) => (
             <Movie key={movie.id} movie={movie} />
           ))}

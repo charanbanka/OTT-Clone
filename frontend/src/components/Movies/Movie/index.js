@@ -4,37 +4,22 @@ import "./movie.css";
 import config from "../../../config";
 import VideoPlayer from "../../Video/VideoPlayer";
 import { getImageUrl } from "../../services/image-services";
-// import play from "../../../../public/images/icons8-play-30.png"
+import { Link } from "react-router-dom";
 
 const Movie = ({ movie }) => {
-
   return (
-    <div className="movie-container">
+    <Link className="movie-container relative" to={`/movie/${movie.id}`}>
       <img
         width="100%"
         height="122px"
         src={getImageUrl(movie.image_id)}
-        className="movie-container-image"
+        className="w-full h-auto transition-transform transform hover:scale-105"
+        alt={movie.name}
       />
-      <div className="movie-container-video">
-        <VideoPlayer id={movie.video_id} />
-      </div>
-      <div className="movie-content">
-        <div className="media-icons">
-          <div className="circle-icon">
-            <TiMediaPlay color="white" />
-          </div>
-          <div>
-            <TiMediaPlay color="white" />
-          </div>
-          <div>
-            <TiMediaPlay color="white" />
-          </div>
-        </div>
-        <div>96%</div>
-        <div>Intimate</div>
-      </div>
-    </div>
+      {/* <div className="overlay absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 hover:opacity-100">
+        <TiMediaPlay className="text-white text-3xl" />
+      </div> */}
+    </Link>
   );
 };
 
