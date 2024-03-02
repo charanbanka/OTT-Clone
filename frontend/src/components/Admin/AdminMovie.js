@@ -4,6 +4,7 @@ import { serviceRequest } from "../../serviceRequest";
 import "./admin.css";
 import constants from "../../constants";
 import { getImageUrl } from "../services/image-services";
+import VideoPlayer from "../Video/VideoPlayer";
 
 const GET_VIDEOS_LIST_URL = `${config.baseUrl}/videos/getAll`;
 const GET_IMAGES_LIST_URL = `${config.baseUrl}/images/getAll`;
@@ -295,8 +296,12 @@ const AdminMovie = () => {
                     className="h-30 w-40"
                   />
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {movie.video_id || "-"}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 h-40 w-40">
+                  {/* {movie.video_id || "-"} */}
+                  
+                  {/* {video.path || "-"} */}
+                  <VideoPlayer id={movie.video_id} />
+                
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <span

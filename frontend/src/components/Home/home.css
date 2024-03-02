@@ -7,3 +7,35 @@
     white-space: nowrap;
     /* margin-top: 3rem; */
 }
+
+/* Assuming you're using a CSS file like styles.css */
+
+/* Hide arrows by default */
+.custom-slider .slick-prev,
+.custom-slider .slick-next {
+  display: none;
+}
+
+/* Show arrows when hovering over the slider */
+.custom-slider:hover .slick-prev,
+.custom-slider:hover .slick-next {
+  display: block;
+}
+
+/* Style for the arrows (you can customize this as needed) */
+.custom-slider .slick-prev,
+.custom-slider .slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+}
+
+.custom-slider .slick-prev:hover,
+.custom-slider .slick-next:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}

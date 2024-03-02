@@ -3,6 +3,7 @@ import config from "../../config";
 import { serviceRequest } from "../../serviceRequest";
 import "./admin.css";
 import constants from "../../constants";
+import VideoPlayer from "../Video/VideoPlayer";
 
 const GET_VIDEOS_LIST_URL = `${config.baseUrl}/videos/getAll`;
 const CREATE_VIDEO_URL = `${config.baseUrl}/videos/video/create`;
@@ -220,8 +221,9 @@ const AdminVideo = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {video.content || "-"}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {video.path || "-"}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 h-40 w-40">
+                  {/* {video.path || "-"} */}
+                  <VideoPlayer id={video.id} />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {video.type || "-"}

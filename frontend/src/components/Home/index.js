@@ -1,6 +1,4 @@
-// Home.js
 import React, { useEffect, useState } from "react";
-import TopView from "./TopView";
 import Movie from "../Movies/Movie";
 import "./home.css";
 import { getMoviesApi } from "../services/movie-service";
@@ -8,32 +6,36 @@ import HomeSlider from "./HomeSlider";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
-  const getMovies = async () => {
-    let resp = await getMoviesApi();
-    setMovies(resp?.data || []);
-  };
+
   useEffect(() => {
-    getMovies();
+    // Fetch movies data
+    const fetchMovies = async () => {
+      try {
+        const resp = await getMoviesApi();
+        setMovies(resp?.data || []);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchMovies();
   }, []);
+
   return (
-    <div style={{ paddingBottom: "1rem" }}>
-      <div style={{ background: "white", color: "black" }}>
+    <div className="pb-4">
+      <div className="bg-white">
         <HomeSlider />
       </div>
-      <div className="mt-8 mx-3">
-        <div className="mb-2 flex flex-row justify-between align-center text-2xl">
-          <h4>New Releases</h4>
-          <h4>See All</h4>
+      <div className="mt-8">
+        <div className="mb-2 flex justify-between items-center text-2xl">
+          <h4 className="font-semibold">New Releases</h4>
+          <h4 className="text-blue-500 cursor-pointer">See All</h4>
         </div>
 
-        <div className="flex flex-row flex-wrap gap-2">
-          {/* {[...Array(10)].map((item) => {
-          return <Movie key={item} />;
-        })} */}
-
-          {movies.map((item) => {
-            return <Movie key={item.id} movie={item} />;
-          })}
+        <div className="flex flex-wrap gap-1">
+          {movies.map((movie) => (
+            <Movie key={movie.id} movie={movie} />
+          ))}
         </div>
       </div>
     </div>

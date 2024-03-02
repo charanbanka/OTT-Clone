@@ -10,28 +10,34 @@ import {
 
 export default function HomeSlider() {
   const [images, setImages] = useState([]);
+
   const getImages = async () => {
-    let resp = await getImagesByTypeApi({ type: "homeslider" });
-    setImages(resp?.data || []);
+    try {
+      let resp = await getImagesByTypeApi({ type: "homeslider" });
+      setImages(resp?.data || []);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
   };
+
   useEffect(() => {
     getImages();
   }, []);
-  var settings = {
+
+  const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
+
   return (
-    <Slider {...settings}>
+    <Slider {...settings} className="mx-auto w-full">
       {images.map((item) => {
-        return (
-          <div style={{ height: "500px" }}>
-            <img width="100%" src={getImageUrl(item.id)} height="500px" />
-          </div>
-        );
+        return <img width="100%" src={getImageUrl(item.id)} height="100%" />;
       })}
     </Slider>
   );

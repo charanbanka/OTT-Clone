@@ -1,4 +1,3 @@
-// App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -10,13 +9,13 @@ import Admin from "./components/Admin";
 
 const App = () => {
   return (
-    <div className="app">
+    <div className="bg-gray-900 text-white min-h-screen">
       <Router>
         <div>
           <Navbar />
-          <div class="main-container">
+          <div className="mx-6 py-4">
             <Routes>
-              <Route path="/" exact element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="/movies" element={<Movies />} />
               <Route path="/tv-shows" element={<TVShows />} />
               <Route path="/admin" element={<Admin />} />

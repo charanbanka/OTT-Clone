@@ -3,16 +3,10 @@ import { TiMediaPlay } from "react-icons/ti";
 import "./movie.css";
 import config from "../../../config";
 import VideoPlayer from "../../Video/VideoPlayer";
+import { getImageUrl } from "../../services/image-services";
 // import play from "../../../../public/images/icons8-play-30.png"
 
 const Movie = ({ movie }) => {
-  const getImageUrl = (id) => {
-    return `${config.baseUrl}/images/image/${id}`;
-  };
-
-  const getVideoUrl = (id) => {
-    return `${config.baseUrl}/videos/video/${id}`;
-  };
 
   return (
     <div className="movie-container">
